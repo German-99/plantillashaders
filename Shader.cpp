@@ -6,7 +6,7 @@ GLuint Shader::getID() {
 
 Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 
-	//
+	//Lectura de archivos
 	string codigoVertexShader;
 	ifstream vertexShaderStream(
 		rutaVertexShader, ios::in
@@ -28,13 +28,14 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 	if (fragmentShaderStream.is_open()) {
 		string linea;
 		while (getline(fragmentShaderStream, linea)) {
-			codigoFragmentShader += linea + "\n"
+			codigoFragmentShader += linea + "\n";
 		}
 		fragmentShaderStream.close();
 	}
 	else {
-		cout << "No se pudo abrir el archivo: " << rutaVertexShader << endl;
+		cout << "No se pudo abrir el archivo: " << rutaFragmentShader << endl;
 	}
+	//Cambio de formato string a char*
 	const char* cadenaCodigoVertexShader = codigoVertexShader.c_str();
 	const char* cadenaCodigofragmentshader = codigoFragmentShader.c_str();
 
@@ -60,8 +61,8 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 		GLint longitudLog;
 
 		glGetShaderiv(id, GL_COMPILE_STATUS, &resultado);
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitudLog)
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitudLog);
 	}
 
 
-}
+
