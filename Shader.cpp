@@ -39,7 +39,7 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 	const char* cadenaCodigoVertexShader = codigoVertexShader.c_str();
 	const char* cadenaCodigofragmentshader = codigoFragmentShader.c_str();
 
-	//1.- Crear el programa de shader
+	//1. Crear el programa de shader
 	shaderID = glCreateProgram();
 
 	GLuint vertexShaderID =
@@ -55,6 +55,18 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 	glCompileShader(fragmentShaderID);
 
 	//4. veriifcar errores de compilacion
+	verificarCompilacion(vertexShaderID);
+	verificarCompilacion(fragmentShaderID);
+
+	//5. Adjuntar los shaders al programa
+	glAttachShader(shaderID, vertexShaderID);
+	glAttachShader(shaderID, fragmentShaderID);
+
+	//6. Vincular el programa
+	glLinkProgram(shaderID);
+
+	//7. Verificar si hubo errores en la vinculacion
+}
 
 	void Shader::verificarCompilacion(GLuint id) {
 		GLint resultado;
@@ -62,6 +74,19 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 
 		glGetShaderiv(id, GL_COMPILE_STATUS, &resultado);
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitudLog);
+
+		if (resultado == GL_FALSE) {
+			cout << "No se pudo compilar shader" << end1;
+		}
+		if (longitudLog > 0) {
+			//Inicia una lista de char con el numero de elementos indicados en longitudLog
+			vector<char> mensajeError(longitudLog);
+			//Obtener mensaje del compilador y los guarda en la variable mensajeError
+			glGetShaderInfoLog(id, longitudLog, NULL, &mensajeError[0]);
+			//Recorrer el vector e imprimir sus elementos
+			for(vector<char>::const_iterator i = mensajeError.begin(); i != mensajeError.end(); i++){
+				cout << *i;
+		}
 	}
 
 
