@@ -73,26 +73,27 @@ Shader::Shader(const char* rutaVertexShader, const char* rutaFragmentShader) {
 
 }
 
-	void Shader::verificarCompilacion(GLuint id) {
-		GLint resultado;
-		GLint longitudLog;
+void Shader::verificarCompilacion(GLuint id) {
+	GLint resultado;
+	GLint longitudLog;
 
-		glGetShaderiv(id, GL_COMPILE_STATUS, &resultado);
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitudLog);
+	glGetShaderiv(id, GL_COMPILE_STATUS, &resultado);
+	glGetShaderiv(id, GL_INFO_LOG_LENGTH, &longitudLog);
 
-		if (resultado == GL_FALSE) {
-			cout << "No se pudo compilar shader" << endl;
-		}
-		if (longitudLog > 0) {
-			//Inicia una lista de char con el numero de elementos indicados en longitudLog
-			vector<char> mensajeError(longitudLog);
-			//Obtener mensaje del compilador y los guarda en la variable mensajeError
-			glGetShaderInfoLog(id, longitudLog, NULL, &mensajeError[0]);
-			//Recorrer el vector e imprimir sus elementos
-			for(vector<char>::const_iterator i = mensajeError.begin(); i != mensajeError.end(); i++){
-				cout << *i;
+	if (resultado == GL_FALSE) {
+		cout << "No se pudo compilar shader" << endl;
+	}
+	if (longitudLog > 0) {
+		//Inicia una lista de char con el numero de elementos indicados en longitudLog
+		vector<char> mensajeError(longitudLog);
+		//Obtener mensaje del compilador y los guarda en la variable mensajeError
+		glGetShaderInfoLog(id, longitudLog, NULL, &mensajeError[0]);
+		//Recorrer el vector e imprimir sus elementos
+		for (vector<char>::const_iterator i = mensajeError.begin(); i != mensajeError.end(); i++) {
+			cout << *i;
 		}
 	}
+}
 
 		void Shader::verificarVinculacion(GLuint id) {
 			GLint estadoVinculacion, estadoValidacion;
