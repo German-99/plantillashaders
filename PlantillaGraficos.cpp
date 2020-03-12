@@ -153,7 +153,7 @@ void dibujar() {
 
 	//Proceso dibujo de cuadrado
 	glBindVertexArray(vertexArrayCuadradoID);
-	glDrawArrays(GL_QUADS)
+	glDrawArrays(GL_QUADS, 0, cuadrado.size());
 
 	//Soltar vertex array
 	glBindVertexArray(0);
